@@ -1,4 +1,4 @@
-package edu.eci.arsw.networking;
+package edu.eci.arsw.webframework;
 
 import edu.eci.arsw.networking.http.HttpResponse;
 import edu.eci.arsw.networking.util.ContentTypes;
@@ -10,27 +10,28 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
- * Serves the static HTML/JS/image resources bundled under
- * {@code src/main/resources/public} (and therefore inside the packaged jar,
- * so the whole application ships as one artifact). The requested path is
- * normalized first so a request can never read a file outside the public
- * resources area.
+ * Serves the files registered through {@code staticfiles(...)}. Looks them up
+ * as classpath resources, so they can live inside the packaged jar.
  */
-public final class StaticResourceHandler {
+public final class StaticFileService {
 
-    private static final String PUBLIC_ROOT = "public";
     private static final String INDEX_RESOURCE = "index.html";
 
-    public HttpResponse handle(String requestPath) {
+    private final String root;
+
+    public StaticFileService(String location) {
+        String safeLocation = location == null ? "" : location;
+        this.root = safeLocation.startsWith("/") ? safeLocation.substring(1) : safeLocation;
+    }
+
+    public HttpResponse serve(String requestPath) {
         Optional<String> normalized = PathNormalizer.normalize(requestPath);
         if (normalized.isEmpty()) {
             return HttpResponse.badRequestPlain("400 Bad Request: unsafe path " + requestPath);
         }
 
         String relative = normalized.get().isEmpty() ? INDEX_RESOURCE : normalized.get();
-        String resourceName = PUBLIC_ROOT + "/" + relative;
-
-        byte[] bytes = readResource(resourceName);
+        byte[] bytes = readResource(root + "/" + relative);
         if (bytes == null) {
             return HttpResponse.notFound(requestPath);
         }

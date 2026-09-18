@@ -5,14 +5,14 @@ public class Response {
     private int statusCode = 200;                             // valor por defecto
 
     public void setContentType(String contentType) {
-
+        this.contentType = contentType;
     }
     public String getContentType() {
         return this.contentType;
     }
 
     public void setStatus(int statusCode) {
-
+        this.statusCode = statusCode;
     }
     public int getStatus() {
         return this.statusCode;

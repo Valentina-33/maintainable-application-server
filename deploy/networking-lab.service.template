@@ -24,6 +24,8 @@ Type=simple
 User=<SERVICE_LINUX_USER>
 WorkingDirectory=<APP_DIR>
 Environment=PORT=<APP_PORT>
+Environment=APP_ENV=production
+Environment=GREETING_PREFIX=Hello
 ExecStart=<JAVA_HOME>/bin/java -jar <APP_DIR>/networking-lab-1.0.0.jar
 Restart=on-failure
 RestartSec=5
