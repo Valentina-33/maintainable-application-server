@@ -10,8 +10,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-JAR_PATH="${JAR_PATH:-$SCRIPT_DIR/../target/networking-lab-1.0.0.jar}"
+JAR_PATH="${JAR_PATH:-$SCRIPT_DIR/../target/maintainable-application-server-1.0.0.jar}"
 export PORT="${1:-${PORT:-8080}}"
 
-echo "Starting networking-lab on port $PORT using $JAR_PATH"
+echo "Starting maintainable-application-server on port $PORT using $JAR_PATH"
 exec java -jar "$JAR_PATH"

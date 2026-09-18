@@ -64,7 +64,7 @@ Requires JDK 17+ and Maven.
 
 ```bash
 mvn clean package
-java -jar target/networking-lab-1.0.0.jar
+java -jar target/maintainable-application-server-1.0.0.jar
 ```
 
 The server starts on port `8080` by default and serves `src/main/resources/webroot/index.html` at
@@ -73,7 +73,7 @@ The server starts on port `8080` by default and serves `src/main/resources/webro
 To run with a different configuration:
 
 ```bash
-PORT=8081 GREETING_PREFIX=Hola APP_ENV=development java -jar target/networking-lab-1.0.0.jar
+PORT=8081 GREETING_PREFIX=Hola APP_ENV=development java -jar target/maintainable-application-server-1.0.0.jar
 ```
 
 Run the test suite (unit tests plus an integration test that starts a real `HttpServer` and drives
@@ -138,18 +138,18 @@ so it is never reachable when `APP_ENV=production`.
 Deployment steps (AWS EC2, reusing the systemd approach from the previous networking lab):
 
 1. `mvn clean package` locally, or on the instance.
-2. Copy `target/networking-lab-1.0.0.jar` to the instance (e.g. `/opt/app/`).
-3. Copy [`deploy/networking-lab.service.template`](deploy/networking-lab.service.template) to
-   `/etc/systemd/system/networking-lab.service` and replace every `<PLACEHOLDER>`. It already sets
+2. Copy `target/maintainable-application-server-1.0.0.jar` to the instance (e.g. `/opt/app/`).
+3. Copy [`deploy/maintainable-application-server.service.template`](deploy/maintainable-application-server.service.template) to
+   `/etc/systemd/system/maintainable-application-server.service` and replace every `<PLACEHOLDER>`. It already sets
    `APP_ENV=production`, which disables `/shutdown`.
-4. `sudo systemctl daemon-reload && sudo systemctl enable --now networking-lab`
+4. `sudo systemctl daemon-reload && sudo systemctl enable --now maintainable-application-server`
 5. Open the chosen port in the instance's security group / firewall.
 6. Verify with `curl http://localhost:<port>/pi` from inside the instance, then from a browser
    using the instance's public address.
 
 If you deploy to a platform-as-a-service provider instead (Render, Railway, Fly.io), the only
 required steps are: point its build command at `mvn clean package`, its start command at
-`java -jar target/networking-lab-1.0.0.jar`, and set `APP_ENV=production` (plus any other variable
+`java -jar target/maintainable-application-server-1.0.0.jar`, and set `APP_ENV=production` (plus any other variable
 from the table above) in its environment configuration — the platform supplies `PORT` itself.
 
 ## 7. Why this architecture is maintainable

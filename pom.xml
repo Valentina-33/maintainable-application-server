@@ -5,14 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.eci.arsw</groupId>
-    <artifactId>networking-lab</artifactId>
+    <artifactId>maintainable-application-server</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>networking-lab</name>
+    <name>maintainable-application-server</name>
     <description>
-        Sequential socket-based HTTP mini web application built for the Networking Lab (Part 2):
-        serves static HTML/JS/image resources and a small set of hardcoded JSON services.
+        A small Java web framework, built on top of a sequential socket-based HTTP server, that
+        lets a developer register GET routes as lambda functions, serve static files, read
+        query-string parameters, and configure the server through environment variables.
     </description>
 
     <properties>
