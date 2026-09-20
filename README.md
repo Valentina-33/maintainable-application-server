@@ -28,7 +28,7 @@ StaticFileService
     Serves a file from the configured static-files location when no route matches
 ```
 
-Adding a new endpoint means calling `get(...)` once in `Application` — nothing in `Router` or
+Adding a new endpoint means calling `get(...)` once in `Application`. Nothing in `Router` or
 `HttpServer` changes. That is the difference from a server that has `if (path.equals("/hello"))`
 written directly inside its accept loop.
 
@@ -38,7 +38,7 @@ written directly inside its accept loop.
 |---|---|---|
 | `Application` | `edu.eci.arsw.app` | Registers the app's own routes and static-files location. The only class a developer using the framework needs to touch. |
 | `WebFramework` | `edu.eci.arsw.webframework` | Static facade (`staticfiles`, `get`, `start`, `stop`) that hides the `Router`/`HttpServer` wiring from the application. |
-| `Router` | `edu.eci.arsw.webframework` | Registry: path -> `RouteHandler`. No knowledge of sockets or HTTP parsing. |
+| `Router` | `edu.eci.arsw.webframework` | Registry that maps a path to a `RouteHandler`. No knowledge of sockets or HTTP parsing. |
 | `RouteHandler` | `edu.eci.arsw.webframework` | Functional interface `(Request, Response) -> Object`, the contract a lambda must satisfy. |
 | `Request` | `edu.eci.arsw.webframework` | Wraps the parsed HTTP request; `getValue(name)` reads one query-string parameter. |
 | `Response` | `edu.eci.arsw.webframework` | Carries the content type and status code the framework should use to wrap the lambda's return value. |
@@ -56,7 +56,7 @@ written directly inside its accept loop.
 | The memo an office worker fills out | `Response`: says how the reply should be wrapped (content type, status) before it leaves the building |
 | Document archive | `StaticFileService`: hands out a pre-existing document (HTML/CSS/JS/image) when no office was asked for |
 | Building configuration board | Environment variables (`PORT`, `APP_ENV`, `GREETING_PREFIX`): set once when the building opens, not carved into its walls |
-| Closing procedure | Graceful shutdown: the receptionist finishes with the visitor currently at the desk, hands them their reply, and only then locks the door — no one already inside is cut off mid-conversation |
+| Closing procedure | Graceful shutdown: the receptionist finishes with the visitor currently at the desk, hands them their reply, and only then locks the door, so no one already inside is cut off mid-conversation |
 
 ## 2. Build and run locally
 
@@ -112,7 +112,7 @@ deployment platform's dashboard.
 
 `GET /shutdown` calls `WebFramework.stop()`, which flips a `running` flag. Because the server is
 strictly sequential, that flag is only read again *after* the current response has already been
-written and the current connection closed — so the client that asked for the shutdown always gets
+written and the current connection closed, so the client that asked for the shutdown always gets
 its reply. The next iteration of the accept loop sees `running == false` and exits, and the
 `ServerSocket` is closed right after.
 
@@ -132,8 +132,8 @@ so it is never reachable when `APP_ENV=production`.
 
 ## 6. Cloud deployment
 
-**Platform used:** _TODO — fill in once deployed (e.g. AWS EC2, Render, Railway, Fly.io)._
-**Public URL:** _TODO — fill in once deployed._
+**Platform used:** AWS EC2 (Amazon Linux 2023, t3.micro).
+**Public URL:** [http://ec2-54-234-95-53.compute-1.amazonaws.com:8080](http://ec2-54-234-95-53.compute-1.amazonaws.com:8080)
 
 Deployment steps (AWS EC2, reusing the systemd approach from the previous networking lab):
 
@@ -150,7 +150,7 @@ Deployment steps (AWS EC2, reusing the systemd approach from the previous networ
 If you deploy to a platform-as-a-service provider instead (Render, Railway, Fly.io), the only
 required steps are: point its build command at `mvn clean package`, its start command at
 `java -jar target/maintainable-application-server-1.0.0.jar`, and set `APP_ENV=production` (plus any other variable
-from the table above) in its environment configuration — the platform supplies `PORT` itself.
+from the table above) in its environment configuration. The platform supplies `PORT` itself.
 
 ## 7. Why this architecture is maintainable
 

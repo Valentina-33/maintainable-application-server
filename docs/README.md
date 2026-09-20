@@ -20,4 +20,4 @@ A few tips:
 
 - Crop out anything that identifies the instance/account (public IP, account ID, ARNs) unless the
   lab specifically asks for it.
-- Keep the filenames exactly as listed above — GitHub's rendering is case-sensitive.
+- Keep the filenames exactly as listed above. GitHub's rendering is case-sensitive.
