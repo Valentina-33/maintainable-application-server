@@ -187,6 +187,48 @@ Manual (see evidence below):
 
 ## 9. Evidence
 
-See [`docs/README.md`](docs/README.md) for the checklist of screenshots to collect (local run,
-static resources, both REST endpoints, environment variables, `/shutdown` in development vs.
-production, and the deployed cloud application).
+Full checklist and filenames in [`docs/README.md`](docs/README.md).
+
+### Local
+
+**Server running locally, serving the static page:**
+
+![Local run](docs/local-run.png)
+
+**Static resource served with the correct `Content-Type`:**
+
+![Static resource](docs/static-resource.png)
+
+**`GET /hello?name=...`:**
+
+![Hello endpoint](docs/endpoint-hello.png)
+
+**`GET /pi`:**
+
+![Pi endpoint](docs/endpoint-pi.png)
+
+**`GET /unknown` → `404 Not Found`:**
+
+![404 response](docs/response-404.png)
+
+**Configured environment variables (no secrets):**
+
+![Environment variables](docs/env-vars.png)
+
+**`/shutdown` stopping the server locally with `APP_ENV=development`:**
+
+![Shutdown in development](docs/shutdown-dev.png)
+
+**`/shutdown` returning `404` with `APP_ENV=production`:**
+
+![Shutdown disabled in production](docs/shutdown-prod-404.png)
+
+### Cloud deployment
+
+**The deployed application, live at its public EC2 address:**
+
+![Cloud deployment](docs/cloud-deployed.png)
+
+**Both REST endpoints responding from the public cloud URL:**
+
+![Cloud endpoints](docs/cloud-endpoints.png)
