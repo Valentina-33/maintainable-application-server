@@ -134,6 +134,9 @@ so it is never reachable when `APP_ENV=production`.
 
 **Platform used:** AWS EC2 (Amazon Linux 2023, t3.micro).
 **Public URL:** [http://ec2-54-234-95-53.compute-1.amazonaws.com:8080](http://ec2-54-234-95-53.compute-1.amazonaws.com:8080)
+(the instance was terminated after the evidence in `docs/` was collected, as AWS good practice
+recommends not leaving cloud resources running once they are no longer needed; the screenshots
+below show the application working live at this address while the instance was up)
 
 Deployment steps (AWS EC2, reusing the systemd approach from the previous networking lab):
 
